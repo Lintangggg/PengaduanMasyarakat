@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 class PengaduanController extends Controller
 {
-    public function createMasyarakat(Request $request)
+    public function createPengaduan(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'isi_laporan' => 'required',
@@ -46,6 +46,29 @@ class PengaduanController extends Controller
             ];
 
             return response()->json($response, 201);
+        } catch (\Exception $e) {
+            $response = [
+                'status' => 500,
+                'message' => 'Internal Server Error',
+                'error' => $e->getMessage(),
+            ];
+
+            return response()->json($response, 500);
+        }
+    }
+
+    public function getAllPengaduan()
+    {
+        try {
+            $pengaduan = Pengaduan::all();
+
+            $response = [
+                'status' => 200,
+                'data' => $pengaduan,
+                'message' => 'Data pengaduan retrieved successfully',
+            ];
+
+            return response()->json($response, 200);
         } catch (\Exception $e) {
             $response = [
                 'status' => 500,

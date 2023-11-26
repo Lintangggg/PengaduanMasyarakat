@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Pengaduan;
 use App\Models\Masyarakat;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -262,4 +263,40 @@ class MasyarakatController extends Controller
 
             return response()->json($response, 201);
         }
+
+        public function showPengaduanByNIK(Request $request)
+        {
+            try {
+                $nik = $request->nik;
+
+                $pengaduan = Pengaduan::where('nik', $nik)->get();
+
+                if ($pengaduan->isEmpty()) {
+                    $response = [
+                        'status' => 404,
+                        'message' => 'No pengaduan data found for the specified NIK',
+                    ];
+
+                    return response()->json($response, 404);
+                }
+
+                $response = [
+                    'status' => 200,
+                    'data' => $pengaduan,
+                    'message' => 'Pengaduan data retrieved successfully',
+                ];
+
+                return response()->json($response, 200);
+            } catch (\Exception $e) {
+                $response = [
+                    'status' => 500,
+                    'message' => 'Internal Server Error',
+                    'error' => $e->getMessage(),
+                ];
+
+                return response()->json($response, 500);
+            }
+        }
+
+
 }

@@ -28,5 +28,7 @@ Route::get('/masyarakat/{id}', [MasyarakatController::class, 'getMasyarakatById'
 Route::post('/masyarakat', [MasyarakatController::class, 'createMasyarakat']);
 Route::delete('/masyarakat/{id}', [MasyarakatController::class, 'deleteMasyarakat']);
 Route::put('/masyarakat/{id}', [MasyarakatController::class, 'updateMasyarakat']);
+Route::get('/get-pengaduan/{nik}', [MasyarakatController::class, 'showPengaduanByNIK']);
 
-Route::post('/add-pengaduan', [PengaduanController::class, 'createMasyarakat']);
+Route::get('/pengaduan', [PengaduanController::class, 'getAllPengaduan']);
+Route::post('/add-pengaduan', [PengaduanController::class, 'createPengaduan']);
