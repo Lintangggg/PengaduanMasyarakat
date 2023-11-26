@@ -16,7 +16,7 @@ class Pengaduan extends Model implements Authenticatable
     public $primaryId = "id_pengaduan";
 
     public $table = "pengaduan";
-    public $timestamps = false;
+    // public $timestamps = false;
 
     protected $guarded = ['id_pengaduan'];
 

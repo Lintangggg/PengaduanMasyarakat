@@ -19,6 +19,7 @@ return new class extends Migration
             $table->binary("foto");
             $table->enum("kategori", ['sosial', 'infrastruktur']);
             $table->enum("status", ['0', '1', '2']);
+            $table->timestamps();
         });
     }
 
