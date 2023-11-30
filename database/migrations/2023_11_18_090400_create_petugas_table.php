@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string("username");
             $table->string("password");
             $table->string("telp");
-            $table->enum("level", ['admin', 'petugas']);
+            // $table->string("kategori");
+            $table->enum("level", ['admin', 'sosial', 'infrastruktur']);
             $table->timestamps();
         });
     }

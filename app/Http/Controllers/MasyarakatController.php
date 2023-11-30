@@ -17,7 +17,7 @@ class MasyarakatController extends Controller
     public function getAllMasyarakat()
     {
         try {
-            $users = User::all();
+            $users = Masyarakat::all();
 
             $response = [
                 'status' => 200,
@@ -39,7 +39,7 @@ class MasyarakatController extends Controller
 
     public function getMasyarakatById($id){
         try {
-            $user = User::find($id);
+            $user = Masyarakat::find($id);
 
             if (!$user) {
                 $response = ['status' => 404, 'message' => 'User not found'];
@@ -80,7 +80,7 @@ class MasyarakatController extends Controller
         }
 
         try {
-            $user = User::create([
+            $user = Masyarakat::create([
                 'nik' => $request->nik,
                 'nama' => $request->nama,
                 'username' => $request->username,
@@ -112,7 +112,7 @@ class MasyarakatController extends Controller
     public function deleteMasyarakat($id)
     {
         try {
-            $user = User::find($id);
+            $user = Masyarakat::find($id);
 
             if (!$user) {
                 $response = ['status' => 404, 'message' => 'User not found'];
@@ -141,7 +141,7 @@ class MasyarakatController extends Controller
     public function updateMasyarakat(Request $request, $id)
     {
         try {
-            $user = User::find($id);
+            $user = Masyarakat::find($id);
 
             if (!$user) {
                 $response = ['status' => 404, 'message' => 'User not found'];
@@ -189,11 +189,11 @@ class MasyarakatController extends Controller
 
     public function login(Request $request)
     {
-        $user = User::where('username', $request->username)->first();
+        $user = Masyarakat::where('username', $request->username)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
             $token = $user->createToken('personal-access-token')->plainTextToken;
-            $masyarakat = User::find($user->id);
+            $masyarakat = Masyarakat::find($user->id);
             $masyarakat->nik = $user->nik;
             $masyarakat->save();
 
@@ -212,7 +212,7 @@ class MasyarakatController extends Controller
             return response()->json($response, 401);
         }
 
-        }
+    }
 
         public function register(Request $request)
         {
@@ -229,22 +229,22 @@ class MasyarakatController extends Controller
                 return response()->json($response, 400);
             }
 
-            if (User::where('nik', $request->nik)->exists()) {
+            if (Masyarakat::where('nik', $request->nik)->exists()) {
                 $response = ['status' => 409, 'message' => 'NIK already exists'];
                 return response()->json($response, 409);
             }
 
-            if (User::where('username', $request->username)->exists()) {
+            if (Masyarakat::where('username', $request->username)->exists()) {
                 $response = ['status' => 409, 'message' => 'Username already exists'];
                 return response()->json($response, 409);
             }
 
-            if (User::where('telp', $request->telp)->exists()) {
+            if (Masyarakat::where('telp', $request->telp)->exists()) {
                 $response = ['status' => 409, 'message' => 'Phone number already exists'];
                 return response()->json($response, 409);
             }
 
-            $user = User::create([
+            $user = Masyarakat::create([
                 'nik' => $request->nik,
                 'nama' => $request->nama,
                 'username' => $request->username,
@@ -264,39 +264,7 @@ class MasyarakatController extends Controller
             return response()->json($response, 201);
         }
 
-        public function showPengaduanByNIK(Request $request)
-        {
-            try {
-                $nik = $request->nik;
 
-                $pengaduan = Pengaduan::where('nik', $nik)->get();
-
-                if ($pengaduan->isEmpty()) {
-                    $response = [
-                        'status' => 404,
-                        'message' => 'No pengaduan data found for the specified NIK',
-                    ];
-
-                    return response()->json($response, 404);
-                }
-
-                $response = [
-                    'status' => 200,
-                    'data' => $pengaduan,
-                    'message' => 'Pengaduan data retrieved successfully',
-                ];
-
-                return response()->json($response, 200);
-            } catch (\Exception $e) {
-                $response = [
-                    'status' => 500,
-                    'message' => 'Internal Server Error',
-                    'error' => $e->getMessage(),
-                ];
-
-                return response()->json($response, 500);
-            }
-        }
 
 
 }

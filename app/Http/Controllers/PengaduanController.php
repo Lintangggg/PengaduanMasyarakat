@@ -79,4 +79,65 @@ class PengaduanController extends Controller
             return response()->json($response, 500);
         }
     }
+    public function showPengaduanByNIK(Request $request)
+    {
+        try {
+            $nik = $request->nik;
+
+            $pengaduan = Pengaduan::where('nik', $nik)->get();
+
+            if ($pengaduan->isEmpty()) {
+                $response = [
+                    'status' => 404,
+                    'message' => 'No pengaduan data found for the specified NIK',
+                ];
+
+                return response()->json($response, 404);
+            }
+
+            $response = [
+                'status' => 200,
+                'data' => $pengaduan,
+                'message' => 'Pengaduan data retrieved successfully',
+            ];
+
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'status' => 500,
+                'message' => 'Internal Server Error',
+                'error' => $e->getMessage(),
+            ];
+
+            return response()->json($response, 500);
+        }
+    }
+    public function deletePengaduan($id)
+    {
+        try {
+            $pengaduan = Pengaduan::find($id);
+
+            if (!$pengaduan) {
+                $response = ['status' => 404, 'message' => 'Pengaduan not found'];
+                return response()->json($response, 404);
+            }
+
+            $pengaduan->delete();
+
+            $response = [
+                'status' => 200,
+                'message' => 'Pengaduan deleted successfully',
+            ];
+
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'status' => 500,
+                'message' => 'Internal Server Error',
+                'error' => $e->getMessage(),
+            ];
+
+            return response()->json($response, 500);
+        }
+    }
 }

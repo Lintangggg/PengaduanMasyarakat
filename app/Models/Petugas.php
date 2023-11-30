@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
 
 class Petugas extends Model implements Authenticatable
@@ -24,9 +25,10 @@ class Petugas extends Model implements Authenticatable
 
         if ($user && Hash::check($password, $user->password)) {
             Auth::login($user);
-            return true;
+            return $user;
         }
 
-        return false;
+        return null;
     }
+
 }

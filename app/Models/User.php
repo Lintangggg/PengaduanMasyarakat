@@ -17,10 +17,10 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    public $timestamps = false;
+    // public $timestamps = false;
 
     public $primaryId = "id";
-    protected $table = "masyarakat";
+    protected $table = "users";
     protected $guarded = ['id'];
 
 

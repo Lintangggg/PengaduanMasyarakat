@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'username' => 'LTG',
             'password' => Hash::make(12345),
             'telp' => '0853294532',
-            'level' => 'admin',
+            'level' => 'sosial',
         ]
         );
 
@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
         'username' => 'EAN',
         'password' => Hash::make(12345),
         'telp' => '0853294532',
-        'level' => 'admin',
+        'level' => 'infrastruktur',
         ]
         );
 

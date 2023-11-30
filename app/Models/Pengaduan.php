@@ -12,23 +12,17 @@ use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
 
 class Pengaduan extends Model implements Authenticatable
 {
-    use HasApiTokens,HasFactory, AuthenticatableTrait;
+    use HasApiTokens ,HasFactory, AuthenticatableTrait;
     public $primaryId = "id_pengaduan";
+    protected $primaryKey = 'id_pengaduan';
+
 
     public $table = "pengaduan";
-    // public $timestamps = false;
 
     protected $guarded = ['id_pengaduan'];
 
-    public function checkCredentials($username, $password)
-    {
-        $user = $this->where('username', $username)->first();
-
-        if ($user && Hash::check($password, $user->password)) {
-            Auth::login($user);
-            return true;
-        }
-
-        return false;
-    }
+    // public function tanggapan()
+    // {
+    //     return $this->hasOne(Tanggapan::class, 'id_pengaduan', 'id_tanggapan');
+    // }
 }
