@@ -12,6 +12,13 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <div class="mb-3">
+                        <button class="btn btn-outline-primary mr-2" onclick="filterTable(0)">Menunggu Permintaan</button>
+                        <button class="btn btn-outline-warning mr-2" onclick="filterTable(1)">Proses</button>
+                        <button class="btn btn-outline-success" onclick="filterTable(2)">Tanggapan Diberikan</button>
+                        <button class="btn btn-outline-info ml-2" onclick="resetFilter()">All Data</button>
+                    </div>
+
                     <table class="table table-bordered text-center">
                         <thead>
                             <tr>
@@ -49,7 +56,7 @@
                                         @endif
                                     </td>
                                     <td class="align-middle">{{ $pengaduan->kategori }}</td>
-                                    <td class="align-middle" style="background-color:
+                                    <td class="align-middle" data-status="{{ $pengaduan->status }}" style="background-color:
                                         @if($pengaduan->status == 0)
                                             #ccccff;
                                         @elseif($pengaduan->status == 1)
@@ -66,6 +73,7 @@
                                             Tanggapan Diberikan
                                         @endif
                                     </td>
+
                                     @if($pengaduan->status == 0)
                                         <td class="align-middle">
                                             <form id="acceptForm{{ $pengaduan->id_pengaduan }}" action="/update-status/{{ $pengaduan->id_pengaduan }}" method="POST">
@@ -109,6 +117,32 @@
             });
         }
     </script>
+
+<script>
+    function filterTable(status) {
+        var rows = document.querySelectorAll('tbody tr');
+
+        rows.forEach(function (row) {
+            var statusCell = row.querySelector('td:nth-child(7)');
+            var rowStatus = parseInt(statusCell.dataset.status);
+
+            if (status === rowStatus || status === -1) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    function resetFilter() {
+        var rows = document.querySelectorAll('tbody tr');
+
+        rows.forEach(function (row) {
+            row.style.display = '';
+        });
+    }
+</script>
+
 </x-app-layout>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

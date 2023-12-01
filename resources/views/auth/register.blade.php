@@ -45,7 +45,7 @@
             <x-input-error :messages="$errors->get('telp')" class="mt-2" />
         </div>
 
-        <div class="mt-4" style="rounded; display: block; margin-top: 1rem; width: 100%; border-bottom: 1px solid #ccc; outline: none; border-color: #4F46E5;" class="focus:border-indigo-500">
+        {{-- <div class="mt-4" style="rounded; display: block; margin-top: 1rem; width: 100%; border-bottom: 1px solid #ccc; outline: none; border-color: #4F46E5;" class="focus:border-indigo-500">
             <x-input-label for="role" :value="__('Role')" />
 
             <select id="role" name="role" style="rounded; background-color: #111827; color: #ffffff; display: block; width: 100%; border-bottom: 1px solid #ccc; outline: none;" class="focus:border-indigo-500">
@@ -57,7 +57,7 @@
 
 
             <x-input-error :messages="$errors->get('Role')" class="mt-2" />
-        </div>
+        </div> --}}
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
                 {{ __('Already registered?') }}

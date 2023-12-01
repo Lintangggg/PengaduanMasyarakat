@@ -6,6 +6,8 @@ use App\Models\Pengaduan;
 use App\Models\Tanggapan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PDF;
+
 
 class TanggapanController extends Controller
 {
@@ -69,4 +71,13 @@ class TanggapanController extends Controller
             return response()->json(['message' => 'Data tanggapan tidak ditemukan'], 404);
         }
     }
+
+    public function generatePDF()
+{
+    $data = Tanggapan::all();
+
+    $pdf = PDF::loadView('PDF', compact('data'));
+
+    return $pdf->download('Laporan.pdf');
+}
 }

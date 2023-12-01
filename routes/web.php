@@ -27,7 +27,9 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     $data = Pengaduan::all();
-    return view('dashboard', compact('data'));
+    $availableDates = Pengaduan::distinct('tgl_pengaduan')->pluck('tgl_pengaduan')->toArray();
+    $availableCategories = Pengaduan::distinct('kategori')->pluck('kategori')->toArray();
+    return view('dashboard', compact('data', 'availableDates', 'availableCategories'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/tanggapan', function () {
@@ -59,6 +61,8 @@ Route::post('/update-status/{id}', [PetugasController::class, 'updateStatus']);
 Route::get('/form-tanggapan/{id}', [TanggapanController::class, 'FormTanggapan'])->name('form.tanggapan');
 Route::post('/form-tanggapan-add', [TanggapanController::class, 'AddTanggapan'])->name('add.tanggapan');
 
+Route::get('/form-add-petugas', [PetugasController::class, 'TambahPetugasPage'])->name('add-petugas-page');
+Route::post('/proses-tambah-petugas', [PetugasController::class, 'ProsesTambah'])->name('proses-tambah-petugas');
 Route::get('/form-edit-petugas/{id}', [PetugasController::class, 'UpdatePetugas'])->name('edit-petugas');
 Route::post('/proses-edit-petugas/{id}', [PetugasController::class, 'ProsesUpdate'])->name('proses-edit-petugas');
 Route::post('/delete-petugas/{id}', [PetugasController::class, 'DeletePetugas'])->name('delete-petugas');
@@ -66,3 +70,5 @@ Route::post('/delete-petugas/{id}', [PetugasController::class, 'DeletePetugas'])
 Route::get('/form-edit-masyarakat/{id}', [AdminController::class, 'UpdateMasyarakat'])->name('edit-masyarakat');
 Route::post('/proses-edit-masyarakat/{id}', [AdminController::class, 'ProsesUpdate'])->name('proses-edit-masyarakat');
 Route::post('/delete-masyarakat/{id}', [AdminController::class, 'DeleteMasyarakat'])->name('delete-masyarakat');
+
+Route::get('/generate-pdf', [TanggapanController::class, 'generatePDF'])->name('download-pdf');

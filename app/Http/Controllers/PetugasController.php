@@ -55,6 +55,34 @@ class PetugasController extends Controller
         return redirect('/login');
     }
 
+    public function TambahPetugasPage(){
+        return view('petugas-add-form');
+    }
+
+    public function ProsesTambah(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'password' => 'required',
+            'telp' => 'required|string|max:15',
+            'role' => 'required',
+        ]);
+
+        $hashedPassword = Hash::make($request->input('password'));
+
+        $user = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => $hashedPassword,
+            'telp' => $request->input('telp'),
+            'role' => $request->input('role'),
+        ]);
+
+        return redirect()->route('petugas')->with('success', 'Petugas data added successfully!');
+    }
+
+
     public function UpdatePetugas($id){
         $petugas = User::find($id);
         return view('petugas-form', compact('petugas'));

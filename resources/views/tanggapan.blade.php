@@ -6,17 +6,22 @@
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Tanggapan') }}
         </h2>
+
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                    @if(Auth::user()->role == 'admin')
+                    <a href="{{ route('download-pdf') }}" class="btn btn-primary" style="margin-bottom: 20px;">Download PDF</a>
+                    @endif
                     <table class="table table-bordered text-center">
                         <thead>
                             <tr>
                                 <th>No.</th>
                                 <th>NIK</th>
+                                <th>Pengaduan</th>
                                 <th>Tanggal Tanggapan</th>
                                 <th>Tanggapan</th>
                                 <th>Nama Petugas</th>
@@ -37,6 +42,7 @@
                                 <tr>
                                     <td class="align-middle">{{ $no++ }}</td>
                                     <td class="align-middle">{{ $tanggapan->pengaduan->nik }}</td>
+                                    <td class="align-middle">{{ $tanggapan->pengaduan->isi_laporan }}</td>
                                     <td class="align-middle">{{ $tanggapan->tgl_tanggapan }}</td>
                                     <td class="align-middle">{{ $tanggapan->tanggapan }}</td>
                                     <td class="align-middle">{{ $tanggapan->petugas->name }}</td>
